@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Self-Esteem</title>
+  <meta name="viewport" content="width=device-width"/>
+<body>
+
+<style>
+    :root {
+        --quiz-text-color: rgb(74, 74, 74);
+    }
+    body {
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Helvetica Neue", Arial, sans-serif;
+        color: var(--quiz-text-color);
+    }
+
+    .after-quiz {
+        margin-bottom: 20px;
+        color: var(--quiz-text-color);
+    }
+
+    .block-item.block-html {
+        background-color: #fff;
+    }
+
+    .none {
+        display: none;
+    }
+
+    .advices-header {
+        color: var(--quiz-text-color);
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .advice-list {
+        list-style-type: none;
+        font-size: 16px;
+        padding-left: 0;
+    }
+
+    .advice-list-item {
+        color: rgb(247, 129, 25);
+        background-color: #4a4a4a;
+        margin: 1px;
+        padding: 5px;
+    }
+
+    .sv_q_radiogroup_label [type=radio],
+    .sv_q_radiogroup_label {
+        cursor: pointer;
+    }
+
+    .loading,
+    .sv_q_radiogroup_label {
+        color: #0a0808 !important;
+    }
+
+    .sv_q_title {
+        min-height: 38px;
+    }
+
+    .loading {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        text-align: center;
+        font-size: 1.3em;
+    }
+
+</style>
+<link href="https://unpkg.com/survey-knockout@1.8.48/survey.min.css" type="text/css" rel="stylesheet"/>
+
+
+<h3 class="loading">Loading...</h3>
+
+
+<div class="container black-color">
+
+
+  <div id="surveyElement"></div>
+  <div id="surveyResult"></div>
+
+
+  <div class="after-quiz none">
+    Are you confident in <span class="percent-result"></span>%
+
+    <div class="very-low-result none">
+      This is a VERY low score.
+    </div>
+
+    <div class="low-result none">
+      This is a low score.
+    </div>
+
+    <div class="middle-result none">
+      This is an average result.
+    </div>
+
+    <div class="high-result none">
+      This is a good result
+    </div>
+
+    <div class="very-high-result none">
+      This is a very good result. Keep it up!
+    </div>
+  </div>
+
+  <div id="advices" class="none">
+    <p class="advices-header">
+      How much more harmonious will your life be if the following points are about you?
+    </p>
+    <!-- сюда вставляется список советов -->
+
+    How many opportunities have you already missed because of this?
+
+    
+    <br>
+
+    But what could be
+     Of course, you can live with discomfort and difficulties. But look what your life will be like if you
+     Work through what you're having trouble with right now.
+
+    <br>
+    <br>
+
+    Fast decision
+     The course "Confidence" will work through all your problems. And it will give even more than you expect. You will leave with
+     course by another person. Just read the reviews!
+  </div>
+  
+  wow effect from before and after results
+  
+</div>
+
+<script src="https://unpkg.com/jquery"></script>
+<script src="https://unpkg.com/survey-jquery@1.8.48/survey.jquery.min.js"></script>
+
+<script>
+
+  /*
+   * убрал let const class
+   * + в сафари не работал блок {}
+   * ie11 так и не заработал
+  */
+  function yaMetrikaReachGoal(id) {
+    try {
+      yaCounter76300564.reachGoal(id)
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+
+  var Y = 'Yes';
+  var N = 'No';
+
+  function RadioQuestionEntity(name, title) {
+    this.name = name;
+    this.title = title;
+    this.choices = [Y, N];
+    this.type = 'radiogroup';
+    this.isRequired = true;
+  }
+
+
+  var steps = [
+    {
+      question: 'I am a perfectionist and any business for me is stressful.',
+      advice: 'I dont discount my work if its not perfect.'
+    },
+    {
+      question: 'Speaking in front of an audience is a lot of stress.',
+      advice: 'In front of an audience, I feel the same way as when communicating with one person. It opens up new possibilities'
+    },
+    {
+      question: 'I was asked a question. I dont know the answer, I feel embarrassed and afraid to say I dont know',
+      advice: 'I ask when I dont know something. So I quickly solve problems and develop.'
+    },
+    {
+      question: 'Its hard for me to admit when I dont understand something. I rarely ask clarifying questions',
+      advice: 'Ill clarify if I dont understand something. Thats why Im in the conversation. It helps me improve'
+    },
+    {
+      question: 'I feel uncomfortable asking for the return of a debt or a borrowed item',
+      advice: 'I am not shy about demanding my money/things and wasting my precious time thinking about the situation of no return'
+    },
+    {
+      question: 'Its hard for me to say no to people',
+      advice: 'I refuse if it is inconvenient for me to comply with the request. Therefore, my opinion is considered and I spend more time on myself and on loved ones.'
+    },
+    {
+      question: 'I try very hard to avoid conflict',
+      advice: 'If it comes to conflict, I can stand up for myself. No one will sit on my neck'
+    },
+    {
+      question: 'When people give me compliments, in my heart I dont fully believe them.',
+      advice: 'Im always happy to be praised'
+    },
+    {
+      question: 'Objectively, Im a cool specialist. But I still consider my level insufficient',
+      advice: 'Even if Im not the best specialist, I respect myself as a professional'
+    },
+    {
+      question: 'I find it difficult to call strangers',
+      advice: 'I easily call strangers and do not waste time waiting for an answer to email'
+    },
+    {
+      question: 'I prefer not to speak my mind first',
+      advice: 'I boldly express my point of view and defend it. Therefore, I do not do extra work, they listen to my opinion'
+    },
+    {
+      question: 'If the seller spends a lot of time and effort on me, I feel obligated to buy',
+      advice: 'I do not buy what is beneficial to the seller. I do not spoil the mood of low-quality purchases'
+    },
+    {
+      question: 'I act stupid in awkward situations',
+      advice: 'Any awkward situation cannot unsettle me for a long time. I dont waste precious time on negative memories'
+    },
+    {
+      question: 'I feel very uncomfortable if the pause in the conversation is prolonged',
+      advice: 'A long pause means nothing. I do not spin negative assumptions about myself in my head'
+    },
+    {
+      question: 'I feel uncomfortable in the presence of my boss',
+      advice: 'I can easily communicate with management. They feel it. This opens up great possibilities'
+    },
+    {question: 'Im embarrassed to ask for help', 
+    advice: 'I easily ask for help and get it. Many are happy to help.'},
+    {
+      question: 'I try to avoid new acquaintances',
+      advice: 'I easily make new acquaintances. New acquaintances open up new perspectives in personal life and at work'
+    },
+    {
+      question: 'I am silent when someone climbs in line ahead of me',
+      advice: 'I calmly make a remark to those who want to get something, to the detriment of me.'
+    },
+    {
+      question: 'I dont feel comfortable saying how much I need to pay for a job.',
+      advice: 'I boldly voice the price for my work and even above the market. I am confident in my professionalism'
+    },
+    {
+      question: 'If a stranger is rude to me, I fall into a stupor and I am ashamed',
+      advice: 'I always respond to rudeness'
+    },
+    {
+      question: 'I should probably be paid more. Ill just wait for the boss to notice me',
+      advice: 'If I dont get paid enough, I ask for a raise. My salary cannot be below the market'
+    },
+    {
+      question: 'After a conflict, I can’t recover for a long time and get rid of obsessive thoughts.',
+      advice: 'I quickly withdraw after the conflict. Negativity doesnt destroy me from the inside'
+    },
+  ];
+
+  //createAdviseList(steps.map(s => s.advice).slice(0, 3))
+
+  Survey
+    .StylesManager
+    .applyTheme('orange');
+
+  var pages = steps.map((step, i) => ({
+      questions: [new RadioQuestionEntity(i.toString(), step.question)]
+    })
+  );
+
+  window.survey = new Survey.Model({
+    title: 'How much do you love yourself',
+    showProgressBar: 'bottom',
+    goNextPageAutomatic: true,
+    pages: pages,
+  });
+
+  survey
+    .onComplete
+    .add(onEndQuiz);
+
+  survey
+    .onAfterRenderSurvey
+    .add(onAfterRenderSurvey);
+
+  function onAfterRenderSurvey() {
+    $('.loading').hide();
+    // чет с событиями намудрено в яндекс, поэтому тупо задержка
+    setTimeout(function () {
+      yaMetrikaReachGoal('start-quiz');
+    }, 8e3)
+  }
+
+  survey.locale = 'ru';
+  var myLoc = Survey.surveyLocalization.locales['ru'];
+  myLoc.completingSurvey = 'You have successfully passed this test!';// позже после прохождения теста уже не меняется
+
+  $('#surveyElement').Survey({model: survey});
+
+  function onEndQuiz(result) {
+    var advices = [];
+    var pros = 0;
+    var cons = 0;
+    for (var key in result.data) {
+      if (result.data[key] === Y) {
+        cons++;
+        advices.push(steps[key].advice);
+      } else {
+        pros++;
+      }
+    }
+    //console.log(result.data);
+
+    var positive = Math.round(100 * pros / steps.length);
+
+    var classResultLevel;
+    if (positive < 25) {
+      classResultLevel = '.very-low-result';
+
+    } else if (positive >= 25 && positive < 50) {
+      classResultLevel = '.low-result';
+
+    } else if (positive >= 50 && positive < 85) {
+      classResultLevel = '.middle-result';
+
+    } else if (positive >= 85 && positive < 95) {
+      classResultLevel = '.high-result';
+
+    } else /*percent > 95*/{
+      classResultLevel = '.very-high-result';
+
+    }
+
+    $(classResultLevel).show();
+    $('.percent-result').text(positive);
+    $('.after-quiz').show();
+    createAdviseList(advices);
+    yaMetrikaReachGoal('end-quiz');
+  }
+
+  function createAdviseList(advices) {
+    if (advices.length) {
+      var $adviceList = $('<ul></ul>').addClass('advice-list').insertAfter('.advices-header');
+      advices.forEach(advice => {
+        $(`<li>${advice}</li>`)
+          .addClass('advice-list-item')
+          .appendTo($adviceList);
+      })
+      $('#advices').removeClass('none');
+    }
+  }
+</script>
+
+</body>
+</html>
